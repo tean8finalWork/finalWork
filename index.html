@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+    <div class="leftPanel">
+
+    </div>
+    <div class="rightPanel" >
+        <h1 color="FF5300">淘沙年报</h1>
+        <h3>为您在线生成定制年报</h3>
+        <a href="./page2.html">现在开始</a>
+    </div>
+    </div>
+</body>
+<style>
+    *{padding: 0; margin: 0; box-sizing: border-box;}
+    *::after, *::before{box-sizing: boder-box;}
+    a{
+        text-underline-offset: none;
+    }
+    .container{
+        display: flex;
+    }
+
+    .leftPanel{
+        width: 50%;
+        border:1px solid orange;
+        min-height: 500px;
+    }
+    .rightPanel{
+        width: 50%;
+        text-align: center;
+        position: relative;
+        right:0;
+        border:1px solid black;
+    }
+    .rightPanel > h1{
+        color: #FF5300;
+        padding: 60px;
+    }
+    .rightPanel > h3, a{
+        color: #FF8600;
+        margin-bottom: 48px;
+    } 
+
+    .rightPanel >a{
+        font-size: 32px;
+    }
+</style>
+</html>
