@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>淘沙年报</title>
 </head>
 <body>
     <div class="container">
-        <label>
-            <input type="text" placeholder="请输入商户ID">
+        <label class="storeIpt">
+            <input type="text" placeholder="请输入商户ID" id="storeID" oninput="getStoreID()">
         </label>
-        <h3>请选择年报类型</h3>
+        <h1>请选择年报类型</h1>
         <div class="topview">
-            <div class="item">
+            <div class="item" onclick="_add(0)">
                 <a href="#shop">
                     <img src="./shop.jpg"/>
                     店铺
                 </a>
             </div>
-            <div class="item">
+            <div class="item" onclick="_add(1)">
                 <a href="#good">
                     <img src="./baobei.jpg"/>
                     宝贝
@@ -28,52 +28,95 @@
         </div>
     </div>
     <div class="container2" id="shop">
-        <h3>请按顺序选择您需要展示的信息</h3>            
+        <h1 class="slg2">请选择您需要展示的信息</h1>            
         <div class="subcontainer">
-        <span class="waves btn">营业额</span>
-        <span class="waves btn">最高销量宝贝</span>
-        <span class="waves btn">消费者画像</span>
-        <span class="waves btn">高销量top3</span>
-        <span class="waves btn">好评top3</span>
-        <span class="waves btn">低销量top3</span>
-        <span class="waves btn">差评top3</span>
+        <span onclick="add(1)" class="waves btn">营业额</span>
+        <span onclick="add(2)" class="waves btn">最高销量宝贝</span>
+        <span onclick="add(3)" class="waves btn">消费者性别比</span>
+        <span onclick="add(4)" class="waves btn">消费者年龄比</span>
+        <span onclick="add(5)" class="waves btn">消费者购买力</span>
+        <span onclick="add(6)" class="waves btn">高销量top3</span>
+        <span onclick="add(7)" class="waves btn">好评top3</span>
+        <span onclick="add(8)" class="waves btn">低销量top3</span>
+        <span onclick="add(9)" class="waves btn">差评top3</span>
+        <span class="btn confirm" onclick="produce()">开始生成</span>
         </div>
+        
     </div>
     <div class="container3" id="good">
-        <h3>请按顺序选择您需要展示的信息</h3>
         <label>
-            <span>请输入商品的ID:</span><input type="text" placeholder="6位数以内的数字">
+            <span class="ipt2">请输入商品的ID:</span>
+            <input type="text" placeholder="6位数以内的数字" id="itemID" oninput="getItemID()">
         </label>
-        <div class="subcontainer">
-        <span class="waves btn">销售量</span>
-        <span class="waves btn">消费者画像</span>
-        <span class="waves btn">咨询量</span>
-        <span class="waves btn">咨询后买单</span>
-        <span class="waves btn">评价词云</span>
+        <div class="slg3">
+            <h1 id="slg3">请选择您需要展示的信息</h1>
         </div>
+        
+
+        <div class="subcontainer">
+        <span onclick="add(1)" class="waves btn">消费者性别比</span>
+        <span onclick="add(2)" class="waves btn">消费者年龄比</span>
+        <span onclick="add(3)" class="waves btn">消费者购买力</span>
+        <span onclick="add(4)" class="waves btn">好中差评率</span>
+        <span onclick="add(5)" class="waves btn">咨询量</span>
+        <span onclick="add(6)" class="waves btn">咨询后购买率</span>
+        <span onclick="add(7)" class="waves btn">评价词云</span>
+        <span class="btn confirm" onclick="produce()">开始生成</span>
+        </div>
+
     </div>
 </body>
 <style>
-    body{
+    html,body{
         color: #FF5300;
         background: rgba(231, 230, 230,1);
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
     .container{
-        margin: 64px;
+        width: 100%;
+        height: 100%;
+        padding: 0;
         text-align: center;
-    }
 
+    }
+    h1{
+        margin-top: 100px;
+    }
+    .slg2{
+        padding-top: 100px;
+        height: 100px;
+        
+    }
+    #slg2{
+        margin-top: 20px;
+    }
     .container2{
         text-align: center;
+        width: 100%;
+        height: 100%;
 
     }
     input{
+        margin-top: 100px;
         border: none;
+        font-size: larger;
         border-bottom:1px solid  #FF5300;
         background: inherit;
         text-align: center;
     }
+    .topview{
+        width: 80%;
+        margin: -50px auto;
+        height: 60%;
 
+    }
+
+    .item{
+        margin: auto 0;
+    }
     .item >a{
         padding: 8px;
         display: flex;
@@ -81,10 +124,11 @@
     }
 
     .item >a >img{
-        border: 3px solid #FF5300;
-        border-radius: 10px;
-        width: 56px;
-        padding: 16px;
+        
+        border: 10px solid #FF5300;
+        border-radius: 32px;
+        width: 84px;
+        padding: 32px;
     }
     .topview{
         display: flex;
@@ -100,8 +144,12 @@
         margin: 50px;
         padding: 16px;
     }
-
+    .ipt2{
+        font-size: large;
+    }
     .container3{
+        width: 100%;
+        height: 100%;
         text-align: center;
     }
     .container3 > span{
@@ -160,8 +208,46 @@
         border: 3px solid white;
         border-radius: 10px;
     }
+
+    .confirm{
+    position:relative;
+    cursor:pointer;
+    display:inline-block;
+    overflow:hidden;
+    text-align: center;
+    -webkit-tap-highlight-color:transparent;
+    z-index:1;
+  color: #fff;
+  background-color: #FF5300;
+  border:3px solid #FF5300;
+  border-radius: 10px;
+    
+}
+.confirm:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.6s;
+}
+
+    .confirm:active:after {
+    transform: scale(0, 0);
+    opacity: 0.2;
+    transition: 0s;
+    }
 </style>
 <script>
+
     const clickhandler =(event)=>{
         const target = event.target;
         if(target.classList.contains('select')){
@@ -176,5 +262,44 @@
         clickhandler
         )
     }
+    
+    var index=1
+    var storeID=new Number
+    var itemID=new Number
+    //order 序列码
+    var order=new Array(10).fill(false)
+    var _add=function(num){
+        order[0]=num
+    }
+    var add=function(num1){
+        index++
+        order[num1]=!order[num1]
+    }
+    var produce=function(){
+        if(index==1) alert("尚未选择")
+        else {
+            alert ("开始生成")
+        }
+    }
+    var getStoreID=function(){
+        storeID=document.getElementById("storeID").value
+    }
+    var getItemID=function(){
+        itemID=document.getElementById("itemID").value
+    }
+    var produce=function(){
+        if(order[0]==0&&!storeID) alert("尚未填写商铺ID")
+        if(order[1]==1&&!itemID) alert("尚未填写商品ID")
+        if(index==1) alert("尚未选择")
+        else {
+            alert ("开始生成")
+            (deliver())
+        }
+    }
+    var deliver=function(){
+        if(order[0]==0) return {"storeID":storeID,"order":order}
+        else return {"itemID":itemID,"order":order}
+    }
+    
 </script>
 </html>
