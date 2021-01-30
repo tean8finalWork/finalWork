@@ -2,16 +2,23 @@ var Mock = require('mockjs')
 var Random=Mock.Random
 
 var data={
-    storeID:233,
-    itemID:555,
-    // order:[0,0,5,3,2,0,0,0,4,0],
-    order:[0,1],
-    s_sales:new Array(12).fill(0),
-    s_topSale:[{}],
-    s_csm_sex:{},
-    s_csm_age:{},
-    s_csm_type:{},
-    s_commentType:[]
+    storeID:233,//输入的商铺id
+    itemID:555,//输入的商品id
+    order:[0,5,4,3,2,6,1,7],//生成的序列码
+    //商品部分
+    i_consumer:[],//消费者画像
+    i_comment:[],//评价
+    i_consult:[],//咨询量
+    i_saleAfterConsult:[],//咨询后购买率
+    i_keyWord:[],//词云
+    i_sale:[],//销售量
+    //商铺部分
+    s_sales:new Array(12).fill(0),//销售量
+    s_topSale:[{}],//高销量
+    s_csm_sex:{},//性别比
+    s_csm_age:{},//年龄比
+    s_csm_type:{},//购买力
+    s_commentType:[]//评价
 }
 
 
@@ -192,7 +199,6 @@ var s_getSalesNum=function(itemList){
 //入口函数
 var getOrder=function(order){
     var obj={}
-    
     if(data.order[0]==1){//商品
         var itemData=getItem(data.itemID)
         order.forEach((item,index)=>{
@@ -201,27 +207,25 @@ var getOrder=function(order){
             switch(index){
                 case 0:;
                 case 1,2,3:
-                   obj.consumer=i_getConsumer(itemData)
+                   data.i_consumer=i_getConsumer(itemData)
                 case 4:
-                    obj.comment=i_getCommentType(itemData)
+                    data.i_comment=i_getCommentType(itemData)
                     
                 case 5:
-                    obj.consult=i_getConsultNum(itemData)
+                    data.i_consult=i_getConsultNum(itemData)
                     
                 case 6:
-                    obj.saleAfterConsult=i_getOrderAfterConsultRate(itemData)
+                    data.i_saleAfterConsult=i_getOrderAfterConsultRate(itemData)
                     
                 case 7:
-                    obj.keyWord=i_getKeyWord(itemData)
+                    data.i_keyWord=i_getKeyWord(itemData)
                     
                 case 8://单个商品的销售量
-                    obj.sale=i_getSalesNum(itemData)   
-                    data.s_consumer
-                     
+                data.i_sale=i_getSalesNum(itemData)   
+                    
             }
         }
         })
-        return obj
     }
     else{//全店
         var List=getStore(data.storeID)
@@ -266,5 +270,6 @@ var getOrder=function(order){
         data.s_commentType.sort(sortByComment)
     }
 }
-//  getOrder(data.order)
-// console.log(JSON.stringify(data.s_commentType))
+
+//初始化
+getOrder(data.order)
