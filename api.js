@@ -4,9 +4,14 @@ var Random=Mock.Random
 var data={
     storeID:233,
     itemID:555,
-    order:[1,3,0,0,2,0,0,0],
-    store:[],
-    item:[]
+    // order:[0,0,5,3,2,0,0,0,4,0],
+    order:[0,1],
+    s_sales:new Array(12).fill(0),
+    s_topSale:[{}],
+    s_csm_sex:{},
+    s_csm_age:{},
+    s_csm_type:{},
+    s_commentType:[]
 }
 
 
@@ -24,7 +29,7 @@ Random.extend({
         return this.pick(_consume)
     },
     type:function(){
-        var _type=['好评','中评','差评']
+        var _type=['good','medium','bad']
         return this.pick(_type)
     }
 })
@@ -91,6 +96,13 @@ var _reduce=function(array){
     },{})
 }
 
+var sortBySale=function(a,b){
+    return b.total-a.total
+}
+
+var sortByComment=function(a,b){
+    return b.good*0.8+b.medium*0.2-a.good*0.8-a.medium*0.2
+}
 
 //——————————————————————————————————————————————————————————————————————————————————
 //——————————————————————————————————————————————————————————————————————————————————
@@ -142,7 +154,14 @@ var i_getOrderAfterConsultRate=function(itemData){
 var i_getSalesNum=function(itemData){
     return itemData.salesNum
 }
-
+//5.5总销量
+var i_getTotal=function(itemData){
+    var total=0
+    itemData.salesNum.forEach(item=>{
+        total+=item.salesPerMonth
+    })
+    return {"itemID":itemData.itemID,"total":total}
+}
 //6.词云
 var i_getKeyWord=function(itemData){
     var comment=[]
@@ -151,7 +170,6 @@ var i_getKeyWord=function(itemData){
     });
     return _reduce(comment)
 }
-
 
 
 //店铺部分
@@ -174,7 +192,7 @@ var s_getSalesNum=function(itemList){
 //入口函数
 var getOrder=function(order){
     var obj={}
-    obj.idx=[]
+    
     if(data.order[0]==1){//商品
         var itemData=getItem(data.itemID)
         order.forEach((item,index)=>{
@@ -198,6 +216,7 @@ var getOrder=function(order){
                     
                 case 8://单个商品的销售量
                     obj.sale=i_getSalesNum(itemData)   
+                    data.s_consumer
                      
             }
         }
@@ -205,7 +224,47 @@ var getOrder=function(order){
         return obj
     }
     else{//全店
+        var List=getStore(data.storeID)
+        List.forEach((itemID,itemIdx)=>{
+            var itemData=getItem(itemID)
+            data.order.forEach((item,index)=>{
+                if(item){
+                    switch(index){
+                        case 0:;
+                        case 1://销售额
+                            itemData.salesNum.forEach((cuVal,index)=>{
+                                data.s_sales[index]+=cuVal.salesPerMonth
+                            })
+                        case 2,6,8://销售量top/last
+                            data.s_topSale.push(i_getTotal(itemData))
+                        case 3,4,5://消费者画像 年龄
+                            var consumer=i_getConsumer(itemData)
+                            if (itemIdx==0){
+                                data.s_csm_age=consumer[0],
+                                data.s_csm_sex=consumer[1],
+                                data.s_csm_type=consumer[2]
+                            }
+                            else{
+                                for(var idx in consumer[0]){
+                                    data.s_csm_age[idx]+=consumer[0][idx]
+                                }
+                                for(var idx in consumer[1]){
+                                    data.s_csm_sex[idx]+=consumer[1][idx]
+                                }
+                                for(var idx in consumer[2]){
+                                    data.s_csm_type[idx]+=consumer[2][idx]
+                                }
 
+                            }
+                        case 7,9://评价top/last
+                        data.s_commentType.push({"itemID":itemData.itemID,"commentType":i_getCommentType(itemData)})
+                    }
+                }
+            })
+        })
+        data.s_topSale.sort(sortBySale)
+        data.s_commentType.sort(sortByComment)
     }
 }
-console.log(JSON.stringify(getOrder(data.order)))
+//  getOrder(data.order)
+// console.log(JSON.stringify(data.s_commentType))
