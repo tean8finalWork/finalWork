@@ -11,12 +11,18 @@
             <input type="text" placeholder="请输入商户ID">
         </label>
         <h3>请选择年报类型</h3>
-        <div class="select">
+        <div class="topview">
             <div class="item">
-                <a href="#shop">店铺</a>
+                <a href="#shop">
+                    <img src="./shop.jpg"/>
+                    店铺
+                </a>
             </div>
             <div class="item">
-                <a href="#good">宝贝</a>
+                <a href="#good">
+                    <img src="./baobei.jpg"/>
+                    宝贝
+                </a>
             </div>
 
         </div>
@@ -24,13 +30,13 @@
     <div class="container2" id="shop">
         <h3>请按顺序选择您需要展示的信息</h3>            
         <div class="subcontainer">
-        <span>营业额</span>
-        <span>最高销量宝贝</span>
-        <span>消费者画像</span>
-        <span>高销量top3</span>
-        <span>好评top3</span>
-        <span>低销量top3</span>
-        <span>差评top3</span>
+        <span class="waves btn">营业额</span>
+        <span class="waves btn">最高销量宝贝</span>
+        <span class="waves btn">消费者画像</span>
+        <span class="waves btn">高销量top3</span>
+        <span class="waves btn">好评top3</span>
+        <span class="waves btn">低销量top3</span>
+        <span class="waves btn">差评top3</span>
         </div>
     </div>
     <div class="container3" id="good">
@@ -39,17 +45,18 @@
             <span>请输入商品的ID:</span><input type="text" placeholder="6位数以内的数字">
         </label>
         <div class="subcontainer">
-        <span>销售量</span>
-        <span>消费者画像</span>
-        <span>咨询量</span>
-        <span>咨询后买单</span>
-        <span>评价词云</span>
+        <span class="waves btn">销售量</span>
+        <span class="waves btn">消费者画像</span>
+        <span class="waves btn">咨询量</span>
+        <span class="waves btn">咨询后买单</span>
+        <span class="waves btn">评价词云</span>
         </div>
     </div>
 </body>
 <style>
     body{
         color: #FF5300;
+        background: rgba(231, 230, 230,1);
     }
     .container{
         margin: 64px;
@@ -62,16 +69,24 @@
     }
     input{
         border: none;
-        text-decoration: underline;
+        border-bottom:1px solid  #FF5300;
         background: inherit;
+        text-align: center;
     }
 
-    .item{
-        border: 3px solid #FF5300;
-        border-radius: 3px;
+    .item >a{
         padding: 8px;
+        display: flex;
+        flex-direction: column;
     }
-    .select{
+
+    .item >a >img{
+        border: 3px solid #FF5300;
+        border-radius: 10px;
+        width: 56px;
+        padding: 16px;
+    }
+    .topview{
         display: flex;
         justify-content: space-around;
     }
@@ -84,7 +99,6 @@
     .subcontainer > span{
         margin: 50px;
         padding: 16px;
-        border: 3px solid #FF5300;
     }
 
     .container3{
@@ -97,5 +111,70 @@
         text-decoration: none;
         color: inherit;
     }
+    .waves{
+    position:relative;
+    cursor:pointer;
+    display:inline-block;
+    overflow:hidden;
+    text-align: center;
+    -webkit-tap-highlight-color:transparent;
+    z-index:1;
+}
+    input{
+        width:200px;
+        height: 48px;
+        outline: none;
+    }
+
+    .waves {
+  position: relative;
+  overflow: hidden;
+  border:3px solid #FF5300;
+  border-radius: 10px;
+}
+
+.waves:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.6s;
+}
+
+    .waves:active:after {
+    transform: scale(0, 0);
+    opacity: 0.2;
+    transition: 0s;
+    }
+
+    .select{
+        border: 3px solid white;
+        border-radius: 10px;
+    }
 </style>
+<script>
+    const clickhandler =(event)=>{
+        const target = event.target;
+        if(target.classList.contains('select')){
+            target.classList.remove('select');
+        }else{
+            target.classList.add('select');
+        }
+    }
+    const targets = document.querySelectorAll(".btn")
+    for(let i=0; i<targets.length; i++){
+        targets[i].addEventListener('click',
+        clickhandler
+        )
+    }
+</script>
 </html>
