@@ -1,5 +1,7 @@
 <template>
-  <div id='container'></div>
+<div id='consume'>
+  <div id='containerCon'></div>
+</div>
 </template>
 
 <script>
@@ -19,7 +21,7 @@ export default {
         }
     },
     mounted() {
-        const piePlot = new Pie('container', {
+        const piePlot = new Pie('containerCon', {
             appendPadding: 10,
             data: this.consume,
             angleField: 'value',
@@ -38,7 +40,7 @@ export default {
     
 <style>
     #container {
-        width: 300px;
-        height: 200px
+      width: 300px;
+      height: 200px
     }
 </style>
