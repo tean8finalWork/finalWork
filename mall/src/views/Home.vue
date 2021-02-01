@@ -19,7 +19,7 @@
                 </a>
             </div>
             <div class="item">
-                <a-button type="default" @click="ToInfo">Start</a-button>
+                <a-button type="default" @click="ToInfo" style= "width: 50px; height: 30px" >Start</a-button>
             </div>
 
         </div>
